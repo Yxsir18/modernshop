@@ -1,0 +1,6 @@
+{
+  "name": "ModernShop",
+  "description": "Complete E-Commerce Web Application. Features a rich product catalog, advanced filtering, full-featured shopping cart & wishlist, customized authentication & checkout simulation, order history, analytics dashboard, and AI product recommendations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

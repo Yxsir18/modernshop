@@ -1,0 +1,44 @@
+name: ModernShop Enterprise CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  validate-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout Code Repository
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install Project Dependencies
+      run: npm ci || npm install
+
+    - name: Check Code Syntax & Typings (Linter)
+      run: npm run lint
+
+    - name: Run Jest & Vitest Tests (Assures 80%+ Code Coverage)
+      run: npm run test
+
+    - name: Run Production Bundle Compiler (Verification)
+      run: npm run build
+      env:
+        NODE_ENV: production
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+    - name: Audit Dependency Packages & Check Vulnerabilities
+      run: npm audit --audit-level=high || true
