@@ -98,13 +98,13 @@ export const Footer: React.FC = () => {
               <Download className="w-6 h-6" />
             </div>
             <div className="flex-1">
-              <h4 className="font-bold text-sm">Install ModernShop App</h4>
-              <p className="text-xs text-emerald-100 mt-1">Get the full experience with offline access and faster loading.</p>
+              <h4 className="font-bold text-sm">Download ModernShop Mobile App</h4>
+              <p className="text-xs text-emerald-100 mt-1">Shop on the go with our native Android app. Fast, secure, and feature-rich.</p>
               <button
                 onClick={handleInstallClick}
-                className="mt-3 px-4 py-2 bg-white text-emerald-600 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors"
+                className="mt-3 px-4 py-2 bg-white text-emerald-600 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors w-full"
               >
-                Get Mobile App
+                Download APK (95 MB)
               </button>
             </div>
             <button
@@ -293,19 +293,19 @@ export const Footer: React.FC = () => {
               </p>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Privacy Policy</Link>
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Service Terms</Link>
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Sitemap</Link>
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Cookie Policy</Link>
-              <button
-                onClick={handleInstallClick}
-                className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all hover:scale-105 shadow-lg shadow-emerald-500/30"
-              >
-                <Download className="w-4 h-4" />
-                <span>Get App</span>
-              </button>
+            <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Privacy</Link>
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Terms</Link>
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Sitemap</Link>
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Cookies</Link>
             </div>
+            <button
+              onClick={handleInstallClick}
+              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all hover:scale-105 shadow-lg shadow-emerald-500/30 w-full sm:w-auto justify-center"
+            >
+              <Download className="w-4 h-4" />
+              <span className="font-semibold">Get App</span>
+            </button>
           </div>
         </div>
       </div>
