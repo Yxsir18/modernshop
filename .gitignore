@@ -9,3 +9,5 @@ coverage/
 
 .vercel
 uploads/
+public/downloads/*.apk
+public/downloads/*.ipa

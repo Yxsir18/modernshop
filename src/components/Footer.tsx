@@ -1,88 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Truck, RefreshCw, ShieldCheck, Award, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Heart, ArrowUp, Download, X } from 'lucide-react';
+import { Truck, RefreshCw, ShieldCheck, Award, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin, Send, Heart, ArrowUp } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 
 export const Footer: React.FC = () => {
   const { categories } = useShop();
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [showInstallBanner, setShowInstallBanner] = useState(false);
-
-  useEffect(() => {
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-      setShowInstallBanner(true);
-    };
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Check if app is already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setShowInstallBanner(false);
-    }
-
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-    };
-  }, []);
-
-  const handleInstallClick = async () => {
-    // Detect user's platform
-    const isAndroid = /Android/i.test(navigator.userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    
-    if (isAndroid) {
-      // Download APK for Android
-      const apkUrl = '/downloads/modernshop-android.apk';
-      const link = document.createElement('a');
-      link.href = apkUrl;
-      link.download = 'modernshop-android.apk';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else if (isIOS) {
-      // For iOS, redirect to App Store or provide IPA download instructions
-      // Since IPA requires TestFlight or enterprise distribution, we'll show instructions
-      alert('To install ModernShop on iOS:\n\n1. Download the IPA file from our secure link\n2. Open it on your iPhone/iPad\n3. Go to Settings > General > VPN & Device Management\n4. Trust the developer certificate\n5. The app will be installed\n\nOr download from TestFlight (link coming soon)');
-    } else {
-      // For desktop, show options
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          setShowInstallBanner(false);
-        }
-        setDeferredPrompt(null);
-      } else {
-        // Show download options
-        const downloadChoice = confirm('Download ModernShop Mobile App:\n\nClick OK for Android (APK)\nClick Cancel for iOS (IPA)');
-        if (downloadChoice) {
-          const apkUrl = '/downloads/modernshop-android.apk';
-          const link = document.createElement('a');
-          link.href = apkUrl;
-          link.download = 'modernshop-android.apk';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        } else {
-          alert('iOS Download:\n\n1. Download the IPA file\n2. Open on your iOS device\n3. Install via Settings > General > VPN & Device Management\n4. Trust the certificate');
-        }
-      }
-    }
-  };
-
-  const dismissBanner = () => {
-    setShowInstallBanner(false);
-    localStorage.setItem('pwa-install-dismissed', 'true');
-  };
-
-  useEffect(() => {
-    const dismissed = localStorage.getItem('pwa-install-dismissed');
-    if (dismissed === 'true') {
-      setShowInstallBanner(false);
-    }
-  }, []);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -90,33 +12,6 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      {/* PWA Install Banner */}
-      {showInstallBanner && (
-        <div className="fixed bottom-24 left-4 right-4 md:left-auto md:right-6 md:w-96 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white p-4 rounded-2xl shadow-2xl shadow-emerald-500/30 z-50 animate-slide-up">
-          <div className="flex items-start gap-3">
-            <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">
-              <Download className="w-6 h-6" />
-            </div>
-            <div className="flex-1">
-              <h4 className="font-bold text-sm">Download ModernShop Mobile App</h4>
-              <p className="text-xs text-emerald-100 mt-1">Shop on the go with our native Android app. Fast, secure, and feature-rich.</p>
-              <button
-                onClick={handleInstallClick}
-                className="mt-3 px-4 py-2 bg-white text-emerald-600 rounded-lg text-sm font-semibold hover:bg-emerald-50 transition-colors w-full"
-              >
-                Download APK (95 MB)
-              </button>
-            </div>
-            <button
-              onClick={dismissBanner}
-              className="text-white/80 hover:text-white transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      )}
-
       <footer className="bg-gradient-to-br from-gray-900 via-black to-gray-900 text-gray-400 font-sans mt-auto border-t border-gray-800">
       {/* Enhanced Value Bar with hover effects */}
       <div className="border-b border-gray-800 max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -293,19 +188,12 @@ export const Footer: React.FC = () => {
               </p>
             </div>
             
-            <div className="flex flex-wrap items-center justify-center gap-3 text-sm">
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Privacy</Link>
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Terms</Link>
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Sitemap</Link>
-              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors text-xs sm:text-sm">Cookies</Link>
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Privacy Policy</Link>
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Service Terms</Link>
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Sitemap</Link>
+              <Link to="#" className="text-gray-500 hover:text-emerald-400 transition-colors">Cookie Policy</Link>
             </div>
-            <button
-              onClick={handleInstallClick}
-              className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-700 transition-all hover:scale-105 shadow-lg shadow-emerald-500/30 w-full sm:w-auto justify-center"
-            >
-              <Download className="w-4 h-4" />
-              <span className="font-semibold">Get App</span>
-            </button>
           </div>
         </div>
       </div>
